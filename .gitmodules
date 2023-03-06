@@ -10,3 +10,6 @@
 	path = lib/operator-filter-registry
 	url = https://github.com/ProjectOpenSea/operator-filter-registry
 	branch = v1.4.1
+[submodule "lib/solidity-examples"]
+	path = lib/solidity-examples
+	url = https://github.com/LayerZero-Labs/solidity-examples
