@@ -21,3 +21,7 @@
 	path = lib/ERC721A
 	url = https://github.com/chiru-labs/ERC721A
 	branch = v4.2.0
+[submodule "lib/ERC721A-Upgradeable"]
+	path = lib/ERC721A-Upgradeable
+	url = https://github.com/chiru-labs/ERC721A-Upgradeable
+	branch = v4.2.0
