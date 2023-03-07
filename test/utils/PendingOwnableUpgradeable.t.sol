@@ -76,8 +76,9 @@ contract PendingOwnableUpgradeableTest is TestHelper {
         pendingOwnable.setPendingOwner(newOwner);
     }
 
-    function test_Revert_SetPendingOwnerWhenNotOwner(address caller) public {
+    function test_Revert_SetPendingOwnerWhenNotOwner(address caller, address alice) public {
         vm.assume(caller != address(this) && caller != address(0));
+        vm.assume(alice != address(this) && alice != address(0));
 
         vm.prank(caller);
         vm.expectRevert(abi.encodeWithSelector(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotOwner.selector));
@@ -103,8 +104,9 @@ contract PendingOwnableUpgradeableTest is TestHelper {
         pendingOwnable.revokePendingOwner();
     }
 
-    function test_Revert_RevokeWhenNotOwner(address caller) public {
+    function test_Revert_RevokeWhenNotOwner(address caller, address alice) public {
         vm.assume(caller != address(this) && caller != address(0));
+        vm.assume(alice != address(this) && alice != address(0));
 
         pendingOwnable.setPendingOwner(alice);
 
@@ -127,13 +129,13 @@ contract PendingOwnableUpgradeableTest is TestHelper {
         assertEq(pendingOwnable.pendingOwner(), address(0), "test_BecomeOwner::2");
     }
 
-    function test_Revert_BecomeOwnerWhenNotPendingOwner(address caller, address newOwner) public {
-        vm.assume(caller != address(this) && caller != address(0));
-        vm.assume(newOwner != address(0));
+    function test_Revert_BecomeOwnerWhenNotPendingOwner(address alice, address newOwner) public {
+        vm.assume(alice != address(this) && alice != address(0));
+        vm.assume(newOwner != address(0) && newOwner != alice);
 
         pendingOwnable.setPendingOwner(newOwner);
 
-        vm.prank(caller);
+        vm.prank(alice);
         vm.expectRevert(
             abi.encodeWithSelector(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotPendingOwner.selector)
         );
@@ -148,15 +150,24 @@ contract PendingOwnableUpgradeableTest is TestHelper {
         assertEq(pendingOwnable.owner(), address(0), "test_RenounceOwnership::1");
     }
 
-    function test_Revert_RenounceOwnershipWhenNotOwner(address caller) public {
-        vm.assume(caller != address(this) && caller != address(0));
+    function test_Revert_RenounceOwnershipWhenNotOwner(address alice) public {
+        vm.assume(alice != address(this) && alice != address(0));
 
-        vm.prank(caller);
+        vm.prank(alice);
         vm.expectRevert(abi.encodeWithSelector(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotOwner.selector));
         pendingOwnable.renounceOwnership();
     }
 
     function test_SupportInterface() public {
+        // IERC165Upgradeable
+        assertTrue(pendingOwnable.supportsInterface(0x01ffc9a7), "test_SupportInterface::1");
+        // IPendingOwnableUpgradeable
         assertTrue(pendingOwnable.supportsInterface(0x45aea0ae), "test_SupportInterface::1");
+    }
+
+    function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
+        vm.assume(interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7);
+
+        assertFalse(pendingOwnable.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");
     }
 }

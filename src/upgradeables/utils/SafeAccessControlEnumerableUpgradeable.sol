@@ -56,8 +56,7 @@ abstract contract SafeAccessControlEnumerableUpgradeable is
         override(PendingOwnableUpgradeable, AccessControlEnumerableUpgradeable)
         returns (bool)
     {
-        return interfaceId == type(ISafeAccessControlEnumerableUpgradeable).interfaceId
-            || PendingOwnableUpgradeable.supportsInterface(interfaceId)
+        return PendingOwnableUpgradeable.supportsInterface(interfaceId)
             || AccessControlEnumerableUpgradeable.supportsInterface(interfaceId);
     }
 
