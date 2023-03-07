@@ -29,9 +29,12 @@ contract SafePausableUpgradeableTest is TestHelper {
         pausable.initialize();
     }
 
-    function test_InitialOwner() public {
-        assertEq(pausable.owner(), address(this), "test_InitialOwner::1");
-        assertEq(pausable.pendingOwner(), address(0), "test_InitialOwner::2");
+    function test_Initialize() public {
+        pausable = new SafePausableUpgradeableHarness();
+        pausable.initialize();
+
+        assertEq(pausable.owner(), address(this), "test_Initialize::1");
+        assertEq(pausable.pendingOwner(), address(0), "test_Initialize::2");
     }
 
     function test_getDefaultRoles() public {
@@ -115,6 +118,13 @@ contract SafePausableUpgradeableTest is TestHelper {
         pausable.unpause();
 
         assertFalse(pausable.paused(), "test_UnPause::1");
+    }
+
+    function test_UnpauseWhenAlreadyUnpaused() public {
+        vm.expectRevert(
+            abi.encodeWithSelector(ISafePausableUpgradeable.SafePausableUpgradeable__AlreadyUnpaused.selector)
+        );
+        pausable.unpause();
     }
 
     function test_UnpauseWithUnpauserRole(address alice) public {

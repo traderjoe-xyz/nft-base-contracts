@@ -32,9 +32,12 @@ contract SafeAccessControlEnumerableUpgradeableTest is TestHelper {
         accessControl.initialize();
     }
 
-    function test_InitialOwner() public {
-        assertEq(accessControl.owner(), address(this), "test_InitialOwner::1");
-        assertEq(accessControl.pendingOwner(), address(0), "test_InitialOwner::2");
+    function test_Initialize() public {
+        accessControl = new SafeAccessControlEnumerableUpgradeableHarness();
+        accessControl.initialize();
+
+        assertEq(accessControl.owner(), address(this), "test_Initialize::1");
+        assertEq(accessControl.pendingOwner(), address(0), "test_Initest_InitializetialOwner::2");
     }
 
     function test_Revert_InitializeTwice() public {

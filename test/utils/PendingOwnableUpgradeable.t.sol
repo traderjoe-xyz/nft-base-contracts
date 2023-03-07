@@ -28,9 +28,12 @@ contract PendingOwnableUpgradeableTest is TestHelper {
         pendingOwnable.initialize();
     }
 
-    function test_InitialOwner() public {
-        assertEq(pendingOwnable.owner(), address(this), "test_InitialOwner::1");
-        assertEq(pendingOwnable.pendingOwner(), address(0), "test_InitialOwner::2");
+    function test_Initialize() public {
+        pendingOwnable = new PendingOwnableUpgradeableHarness();
+        pendingOwnable.initialize();
+
+        assertEq(pendingOwnable.owner(), address(this), "test_Initialize::1");
+        assertEq(pendingOwnable.pendingOwner(), address(0), "test_Initest_InitializetialOwner::2");
     }
 
     function test_Revert_InitializeTwice() public {
