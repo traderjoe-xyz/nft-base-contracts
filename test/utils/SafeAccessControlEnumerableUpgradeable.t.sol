@@ -12,11 +12,11 @@ import {IAccessControlUpgradeable} from "openzeppelin-upgradeable/access/AccessC
 
 contract SafeAccessControlEnumerableUpgradeableHarness is SafeAccessControlEnumerableUpgradeable {
     function initialize() external initializer {
-        __PendingOwnable_init();
+        __SafeAccessControlEnumerable_init();
     }
 
     function wrongInitialize() external {
-        __PendingOwnable_init();
+        __SafeAccessControlEnumerable_init();
     }
 }
 
@@ -184,6 +184,26 @@ contract SafeAccessControlEnumerableUpgradeableTest is TestHelper {
         vm.expectRevert("AccessControl: can only renounce roles for self");
         vm.prank(bob);
         accessControl.renounceRole(role, alice);
+    }
+
+    function test_TransferOwnership(address alice) public {
+        vm.assume(alice != address(this) && alice != address(0));
+
+        accessControl.setPendingOwner(alice);
+
+        vm.expectEmit(true, true, true, true);
+        emit RoleRevoked(accessControl.DEFAULT_ADMIN_ROLE(), address(this), alice);
+        vm.expectEmit(true, true, true, true);
+        emit RoleGranted(accessControl.DEFAULT_ADMIN_ROLE(), alice, alice);
+        vm.prank(alice);
+        accessControl.becomeOwner();
+
+        assertTrue(accessControl.hasRole(accessControl.DEFAULT_ADMIN_ROLE(), alice), "test_TransferOwnership::1");
+        assertEq(accessControl.getRoleMemberCount(accessControl.DEFAULT_ADMIN_ROLE()), 1, "test_TransferOwnership::2");
+
+        assertFalse(
+            accessControl.hasRole(accessControl.DEFAULT_ADMIN_ROLE(), address(this)), "test_TransferOwnership::1"
+        );
     }
 
     function test_SupportInterface() public {
