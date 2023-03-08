@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.10;
+pragma solidity 0.8.13;
 
-import {AccessControlEnumerableUpgradeable} from
-    "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import {
+    AccessControlEnumerableUpgradeable,
+    AccessControlUpgradeable,
+    IAccessControlUpgradeable
+} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 
 import {PendingOwnableUpgradeable} from "./PendingOwnableUpgradeable.sol";
 import {ISafeAccessControlEnumerableUpgradeable} from "../interfaces/ISafeAccessControlEnumerableUpgradeable.sol";
@@ -75,7 +78,7 @@ abstract contract SafeAccessControlEnumerableUpgradeable is
     function grantRole(bytes32 role, address account)
         public
         virtual
-        override
+        override(AccessControlUpgradeable, IAccessControlUpgradeable)
         roleIsNotDefaultAdmin(role)
         onlyOwnerOrRole(getRoleAdmin(role))
     {
@@ -97,7 +100,7 @@ abstract contract SafeAccessControlEnumerableUpgradeable is
     function revokeRole(bytes32 role, address account)
         public
         virtual
-        override
+        override(AccessControlUpgradeable, IAccessControlUpgradeable)
         roleIsNotDefaultAdmin(role)
         onlyOwnerOrRole(getRoleAdmin(role))
     {
@@ -122,7 +125,12 @@ abstract contract SafeAccessControlEnumerableUpgradeable is
      * @param role The role to renounce
      * @param account The address of the account
      */
-    function renounceRole(bytes32 role, address account) public virtual override roleIsNotDefaultAdmin(role) {
+    function renounceRole(bytes32 role, address account)
+        public
+        virtual
+        override(AccessControlUpgradeable, IAccessControlUpgradeable)
+        roleIsNotDefaultAdmin(role)
+    {
         super.renounceRole(role, account);
     }
 

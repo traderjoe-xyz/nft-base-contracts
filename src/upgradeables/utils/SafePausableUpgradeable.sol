@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.10;
+pragma solidity 0.8.13;
 
 import {PausableUpgradeable} from "openzeppelin-upgradeable/security/PausableUpgradeable.sol";
 
