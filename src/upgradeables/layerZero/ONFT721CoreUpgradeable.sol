@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.2;
+pragma solidity 0.8.13;
 
 import "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
 import "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";

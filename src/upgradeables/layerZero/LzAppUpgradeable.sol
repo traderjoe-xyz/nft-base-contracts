@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.2;
+pragma solidity 0.8.13;
 
 import "solidity-examples-upgradeable/interfaces/ILayerZeroReceiverUpgradeable.sol";
 import "solidity-examples-upgradeable/interfaces/ILayerZeroUserApplicationConfigUpgradeable.sol";

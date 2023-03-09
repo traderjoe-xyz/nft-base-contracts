@@ -33,19 +33,27 @@ abstract contract NFTBaseUpgradeable is
      */
     IOperatorFilterRegistry public operatorFilterRegistry;
 
-    /// @notice The fees collected by Joepegs on the sale benefits
-    /// @dev In basis points e.g 100 for 1%
+    /**
+     * @notice The fees collected by Joepegs on the sale benefits
+     * @dev In basis points e.g 100 for 1%
+     */
     uint256 public joeFeePercent;
 
-    /// @notice The address to which the fees on the sale will be sent
+    /**
+     * @notice The address to which the fees on the sale will be sent
+     */
     address public joeFeeCollector;
 
-    /// @notice Start time when funds can be withdrawn
+    /**
+     * @notice Start time when funds can be withdrawn
+     */
     uint256 public withdrawAVAXStartTime;
 
-    /// @notice Allow spending tokens from addresses with balance
-    /// Note that this still allows listings and marketplaces with escrow to transfer tokens if transferred
-    /// from an EOA.
+    /**
+     * @notice Allow spending tokens from addresses with balance
+     * Note that this still allows listings and marketplaces with escrow to transfer tokens if transferred
+     * from an EOA.
+     */
     modifier onlyAllowedOperator(address from) virtual {
         if (from != msg.sender) {
             _checkFilterOperator(msg.sender);
@@ -53,7 +61,9 @@ abstract contract NFTBaseUpgradeable is
         _;
     }
 
-    /// @notice Allow approving tokens transfers
+    /**
+     * @notice Allow approving tokens transfers
+     */
     modifier onlyAllowedOperatorApproval(address operator) virtual {
         _checkFilterOperator(operator);
         _;
@@ -88,17 +98,26 @@ abstract contract NFTBaseUpgradeable is
         _setDefaultRoyalty(royaltyReceiver, DEFAULT_ROYALTIES_PERCENTAGE);
     }
 
+    /**
+     * @notice Returns the project owner role
+     */
     function getProjectOwnerRole() public pure returns (bytes32) {
         return PROJECT_OWNER_ROLE;
     }
 
+    /**
+     * @notice Sets a new withdraw AVAX start time
+     * @param newWithdrawAVAXStartTime New withdraw AVAX start time
+     */
     function setWithdrawAVAXStartTime(uint256 newWithdrawAVAXStartTime) external onlyOwner {
         withdrawAVAXStartTime = newWithdrawAVAXStartTime;
         emit WithdrawAVAXStartTimeSet(newWithdrawAVAXStartTime);
     }
 
-    /// @notice Withdraw AVAX to the given recipient
-    /// @param to Recipient of the earned AVAX
+    /**
+     * @notice Withdraw AVAX to the given recipient
+     * @param to Recipient of the earned AVAX
+     */
     function withdrawAVAX(address to) external onlyOwnerOrRole(PROJECT_OWNER_ROLE) nonReentrant {
         if (block.timestamp < withdrawAVAXStartTime || withdrawAVAXStartTime == 0) {
             revert NFTBase__WithdrawAVAXNotAvailable();
@@ -134,9 +153,11 @@ abstract contract NFTBaseUpgradeable is
         _updateOperatorFilterRegistryAddress(IOperatorFilterRegistry(newOperatorFilterRegistry));
     }
 
-    /// @notice Set the royalty fee
-    /// @param receiver Royalty fee collector
-    /// @param feePercent Royalty fee percent in basis point
+    /**
+     * @notice Set the royalty fee
+     * @param receiver Royalty fee collector
+     * @param feePercent Royalty fee percent in basis point
+     */
     function setRoyaltyInfo(address receiver, uint96 feePercent) external onlyOwner {
         // Royalty fees are limited to 25%
         if (feePercent > MAXIMUM_ROYALTIES_PERCENTAGE) {
@@ -146,6 +167,14 @@ abstract contract NFTBaseUpgradeable is
         emit DefaultRoyaltySet(receiver, feePercent);
     }
 
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * [EIP section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30000 gas.
+     */
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -167,9 +196,11 @@ abstract contract NFTBaseUpgradeable is
         emit OperatorFilterRegistryUpdated(address(newRegistry));
     }
 
-    /// @notice Initialize the sales fee percent taken by Joepegs and address that collects the fees
-    /// @param _joeFeePercent The fees collected by Joepegs on the sale benefits
-    /// @param _joeFeeCollector The address to which the fees on the sale will be sent
+    /**
+     * @notice Initialize the sales fee percent taken by Joepegs and address that collects the fees
+     * @param _joeFeePercent The fees collected by Joepegs on the sale benefits
+     * @param _joeFeeCollector The address to which the fees on the sale will be sent
+     */
     function _initializeJoeFee(uint256 _joeFeePercent, address _joeFeeCollector) private {
         if (_joeFeePercent > BASIS_POINT_PRECISION) {
             revert NFTBase__InvalidPercent();
@@ -196,8 +227,10 @@ abstract contract NFTBaseUpgradeable is
         }
     }
 
-    /// @dev Verifies that enough AVAX has been sent by the sender and refunds the extra tokens if any
-    /// @param price The price paid by the sender for minting NFTs
+    /**
+     * @dev Verifies that enough AVAX has been sent by the sender and refunds the extra tokens if any
+     * @param price The price paid by the sender for minting NFTs
+     */
     function _refundIfOver(uint256 price) internal {
         if (msg.value < price) {
             revert NFTBase__NotEnoughAVAX(price);

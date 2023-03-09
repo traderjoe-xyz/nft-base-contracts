@@ -7,10 +7,14 @@ import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
 import {IERC721ABaseUpgradeable} from "./interfaces/IERC721ABaseUpgradeable.sol";
 
 contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC721ABaseUpgradeable {
-    /// @notice Token URI after collection reveal
+    /**
+     * @notice Token URI after collection reveal
+     */
     string public override baseURI;
 
-    /// @notice Token URI before the collection reveal
+    /**
+     * @notice Token URI before the collection reveal
+     */
     string public override unrevealedURI;
 
     function __ERC721ABase_init(
@@ -28,22 +32,34 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
 
     function __ERC721ABase_init_unchained() internal onlyInitializing onlyInitializingERC721A {}
 
-    /// @notice Set the base URI
-    /// @dev This sets the URI for revealed tokens
-    /// @param _baseURI Base URI to be set
+    /**
+     * @notice Set the base URI
+     * @dev This sets the URI for revealed tokens
+     * @param _baseURI Base URI to be set
+     */
     function setBaseURI(string calldata _baseURI) external override onlyOwner {
         baseURI = _baseURI;
         emit BaseURISet(baseURI);
     }
 
-    /// @notice Set the unrevealed URI
-    /// @dev This sets the URI for unrevealed tokens
-    /// @param _unrevealedURI Unrevealed URI to be set
+    /**
+     * @notice Set the unrevealed URI
+     * @dev This sets the URI for unrevealed tokens
+     * @param _unrevealedURI Unrevealed URI to be set
+     */
     function setUnrevealedURI(string calldata _unrevealedURI) external override onlyOwner {
         unrevealedURI = _unrevealedURI;
         emit UnrevealedURISet(unrevealedURI);
     }
 
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * [EIP section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30000 gas.
+     */
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -56,9 +72,11 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
             || ERC721AUpgradeable.supportsInterface(interfaceId);
     }
 
-    /// @dev `aprove` wrapper to prevent the sender to approve a non-allowed operator
-    /// @param operator Address being approved
-    /// @param tokenId TokenID approved
+    /**
+     * @dev `aprove` wrapper to prevent the sender to approve a non-allowed operator
+     * @param operator Address being approved
+     * @param tokenId TokenID approved
+     */
     function approve(address operator, uint256 tokenId)
         public
         override(ERC721AUpgradeable, IERC721AUpgradeable)
@@ -67,9 +85,11 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
         super.approve(operator, tokenId);
     }
 
-    /// @dev `aproveForAll` wrapper to prevent the sender to approve a non-allowed operator
-    /// @param operator Address being approved
-    /// @param approved Approval status
+    /**
+     * @dev `aproveForAll` wrapper to prevent the sender to approve a non-allowed operator
+     * @param operator Address being approved
+     * @param approved Approval status
+     */
     function setApprovalForAll(address operator, bool approved)
         public
         override(ERC721AUpgradeable, IERC721AUpgradeable)
@@ -78,10 +98,12 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
         super.setApprovalForAll(operator, approved);
     }
 
-    /// @dev `transferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
-    /// @param from Address to transfer from
-    /// @param to Address to transfer to
-    /// @param tokenId TokenID to transfer
+    /**
+     * @dev `transferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
+     * @param from Address to transfer from
+     * @param to Address to transfer to
+     * @param tokenId TokenID to transfer
+     */
     function transferFrom(address from, address to, uint256 tokenId)
         public
         override(ERC721AUpgradeable, IERC721AUpgradeable)
@@ -90,10 +112,12 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
         super.transferFrom(from, to, tokenId);
     }
 
-    /// @dev `safeTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
-    /// @param from Address to transfer from
-    /// @param to Address to transfer to
-    /// @param tokenId TokenID to transfer
+    /**
+     * @dev `safeTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
+     * @param from Address to transfer from
+     * @param to Address to transfer to
+     * @param tokenId TokenID to transfer
+     */
     function safeTransferFrom(address from, address to, uint256 tokenId)
         public
         override(ERC721AUpgradeable, IERC721AUpgradeable)
@@ -102,11 +126,13 @@ contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC7
         super.safeTransferFrom(from, to, tokenId);
     }
 
-    /// @dev `safeTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
-    /// @param from Address to transfer from
-    /// @param to Address to transfer to
-    /// @param tokenId TokenID to transfer
-    /// @param data Data to send along with a safe transfer check
+    /**
+     * @dev `safeTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
+     * @param from Address to transfer from
+     * @param to Address to transfer to
+     * @param tokenId TokenID to transfer
+     * @param data Data to send along with a safe transfer check
+     */
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data)
         public
         override(ERC721AUpgradeable, IERC721AUpgradeable)

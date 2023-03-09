@@ -36,13 +36,23 @@ contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1
         symbol = _symbol;
     }
 
-    /// @notice Set the base URI for all tokens
-    /// @param newURI Base URI to be set
+    /**
+     * @notice Set the base URI for all tokens
+     * @param newURI Base URI to be set
+     */
     function setURI(string calldata newURI) external onlyOwner {
         _setURI(newURI);
         emit URISet(newURI);
     }
 
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * [EIP section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30000 gas.
+     */
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -54,6 +64,11 @@ contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1
             || ERC1155Upgradeable.supportsInterface(interfaceId) || NFTBaseUpgradeable.supportsInterface(interfaceId);
     }
 
+    /**
+     * @dev `setApprovalForAll` wrapper to prevent the sender to approve a non-allowed operator
+     * @param operator Address being approved
+     * @param approved Approval status
+     */
     function setApprovalForAll(address operator, bool approved)
         public
         virtual
@@ -63,6 +78,14 @@ contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1
         super.setApprovalForAll(operator, approved);
     }
 
+    /**
+     * @dev `safeTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
+     * @param from Address to transfer from
+     * @param to Address to transfer to
+     * @param id TokenID to transfer
+     * @param amount Amount to transfer
+     * @param data Data to pass to receiver
+     */
     function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes memory data)
         public
         override(ERC1155Upgradeable, IERC1155Upgradeable)
@@ -71,6 +94,14 @@ contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1
         super.safeTransferFrom(from, to, id, amount, data);
     }
 
+    /**
+     * @dev `safeBatchTransferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
+     * @param from Address to transfer from
+     * @param to Address to transfer to
+     * @param ids TokenIDs to transfer
+     * @param amounts Amounts to transfer
+     * @param data Data to pass to receiver
+     */
     function safeBatchTransferFrom(
         address from,
         address to,
