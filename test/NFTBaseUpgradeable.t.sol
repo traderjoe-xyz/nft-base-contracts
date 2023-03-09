@@ -10,15 +10,15 @@ import {ISafeAccessControlEnumerableUpgradeable} from
 
 contract NFTBaseUpgradeableHarness is NFTBaseUpgradeable {
     function initialize(address dummyAddress) external initializer {
-        __NFTBase_init("NFT Base", "NFTB", 500, dummyAddress, dummyAddress);
+        __NFTBase_init(500, dummyAddress, dummyAddress);
     }
 
     function initialize(address dummyAddress, uint256 joeFee) external initializer {
-        __NFTBase_init("NFT Base", "NFTB", joeFee, dummyAddress, dummyAddress);
+        __NFTBase_init(joeFee, dummyAddress, dummyAddress);
     }
 
     function wrongInitialize(address dummyAddress) external {
-        __NFTBase_init("NFT Base", "NFTB", 500, dummyAddress, dummyAddress);
+        __NFTBase_init(500, dummyAddress, dummyAddress);
     }
 }
 
@@ -49,19 +49,16 @@ contract NFTBaseUpgradeableTest is TestHelper {
         assertEq(nftBase.owner(), address(this), "test_Initialize::1");
         assertEq(nftBase.pendingOwner(), address(0), "test_Initest_InitializetialOwner::2");
 
-        assertEq(nftBase.name(), "NFT Base", "test_Initialize::3");
-        assertEq(nftBase.symbol(), "NFTB", "test_Initialize::4");
-
         assertEq(
-            address(nftBase.operatorFilterRegistry()), 0x000000000000AAeB6D7670E522A718067333cd4E, "test_Initialize::5"
+            address(nftBase.operatorFilterRegistry()), 0x000000000000AAeB6D7670E522A718067333cd4E, "test_Initialize::3"
         );
 
-        assertEq(nftBase.joeFeePercent(), 500, "test_Initialize::6");
-        assertEq(nftBase.joeFeeCollector(), joeFeeReceiver, "test_Initialize::7");
+        assertEq(nftBase.joeFeePercent(), 500, "test_Initialize::4");
+        assertEq(nftBase.joeFeeCollector(), joeFeeReceiver, "test_Initialize::5");
 
         (address royaltiesReceiver, uint256 royaltiesPercent) = nftBase.royaltyInfo(0, 10_000);
-        assertEq(royaltiesReceiver, joeFeeReceiver, "test_Initialize::8");
-        assertEq(royaltiesPercent, 500, "test_Initialize::9");
+        assertEq(royaltiesReceiver, joeFeeReceiver, "test_Initialize::6");
+        assertEq(royaltiesPercent, 500, "test_Initialize::7");
     }
 
     function test_GetProjectOwnerRole() public {

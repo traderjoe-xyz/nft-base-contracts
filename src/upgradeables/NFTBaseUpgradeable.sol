@@ -28,16 +28,6 @@ abstract contract NFTBaseUpgradeable is
     bytes32 private constant PROJECT_OWNER_ROLE = keccak256("PROJECT_OWNER_ROLE");
 
     /**
-     * @notice Name of the NFT collection
-     */
-    string public name;
-
-    /**
-     * @notice Symbol of the NFT collection
-     */
-    string public symbol;
-
-    /**
      * @notice Contract filtering allowed operators, preventing unauthorized contract to transfer NFTs
      * By default, Joepegs contracts are subscribed to OpenSea's Curated Subscription Address at 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6
      */
@@ -69,29 +59,20 @@ abstract contract NFTBaseUpgradeable is
         _;
     }
 
-    function __NFTBase_init(
-        string memory _name,
-        string memory _symbol,
-        uint256 _joeFeePercent,
-        address _joeFeeCollector,
-        address royaltyReceiver
-    ) internal onlyInitializing {
+    function __NFTBase_init(uint256 _joeFeePercent, address _joeFeeCollector, address royaltyReceiver)
+        internal
+        onlyInitializing
+    {
         __SafePausable_init();
         __ERC2981_init();
 
-        __NFTBase_init_unchained(_name, _symbol, _joeFeePercent, _joeFeeCollector, royaltyReceiver);
+        __NFTBase_init_unchained(_joeFeePercent, _joeFeeCollector, royaltyReceiver);
     }
 
-    function __NFTBase_init_unchained(
-        string memory _name,
-        string memory _symbol,
-        uint256 _joeFeePercent,
-        address _joeFeeCollector,
-        address royaltyReceiver
-    ) internal onlyInitializing {
-        name = _name;
-        symbol = _symbol;
-
+    function __NFTBase_init_unchained(uint256 _joeFeePercent, address _joeFeeCollector, address royaltyReceiver)
+        internal
+        onlyInitializing
+    {
         // Initialize the operator filter registry and subscribe to OpenSea's list
         IOperatorFilterRegistry _operatorFilterRegistry =
             IOperatorFilterRegistry(0x000000000000AAeB6D7670E522A718067333cd4E);
