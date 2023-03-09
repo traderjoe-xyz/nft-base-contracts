@@ -10,6 +10,7 @@ import {IERC721MetadataUpgradeable} from
 
 import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/upgradeables/ERC721ABaseUpgradeable.sol";
 import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
+import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/IPendingOwnableUpgradeable.sol";
 
 contract ERC721ABaseUpgradeableHarness is ERC721ABaseUpgradeable {
     function initialize(address dummyAddress) external initializer initializerERC721A {
@@ -22,6 +23,9 @@ contract ERC721ABaseUpgradeableHarness is ERC721ABaseUpgradeable {
 }
 
 contract ERC721ABaseUpgradeableTest is TestHelper {
+    event BaseURISet(string baseURI);
+    event UnrevealedURISet(string unrevealedURI);
+
     ERC721ABaseUpgradeableHarness erc721aBase;
 
     function setUp() public {
@@ -63,6 +67,38 @@ contract ERC721ABaseUpgradeableTest is TestHelper {
         erc721aBase = new ERC721ABaseUpgradeableHarness();
         vm.expectRevert("Initializable: contract is not initializing");
         erc721aBase.wrongInitialize(joepegs);
+    }
+
+    function test_SetBaseURI(string memory baseURI) public {
+        vm.expectEmit(true, true, true, false);
+        emit BaseURISet(baseURI);
+        erc721aBase.setBaseURI(baseURI);
+
+        assertEq(erc721aBase.baseURI(), baseURI, "test_SetBaseURI::1");
+    }
+
+    function test_Revert_SetBaseURIWhenNotOwner(address alice, string memory baseURI) public {
+        vm.assume(alice != address(0) && alice != address(this));
+
+        vm.expectRevert(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotOwner.selector);
+        vm.prank(alice);
+        erc721aBase.setBaseURI(baseURI);
+    }
+
+    function test_SetUnrevealedURI(string memory unrevealedURI) public {
+        vm.expectEmit(true, true, true, false);
+        emit UnrevealedURISet(unrevealedURI);
+        erc721aBase.setUnrevealedURI(unrevealedURI);
+
+        assertEq(erc721aBase.unrevealedURI(), unrevealedURI, "test_SetUnrevealedURI::1");
+    }
+
+    function test_Revert_SetUnrevealedURIWhenNotOwner(address alice, string memory unrevealedURI) public {
+        vm.assume(alice != address(0) && alice != address(this));
+
+        vm.expectRevert(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotOwner.selector);
+        vm.prank(alice);
+        erc721aBase.setUnrevealedURI(unrevealedURI);
     }
 
     function test_SupportInterface() public {
