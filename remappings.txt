@@ -3,6 +3,7 @@ ds-test/=lib/forge-std/lib/ds-test/src/
 ERC721A/=lib/ERC721A/contracts/
 ERC721A-Upgradeable/=lib/ERC721A-Upgradeable/contracts/
 openzeppelin/=lib/openzeppelin-contracts/contracts/
+openzeppelin-contracts/=lib/openzeppelin-contracts/contracts
 openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/
 solidity-examples/=lib/solidity-examples/contracts/
 solidity-examples-upgradeable/=lib/solidity-examples/contracts/contracts-upgradable
