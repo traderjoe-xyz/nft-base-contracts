@@ -73,6 +73,17 @@ contract OZNFTBaseUpgradeable is NFTBaseUpgradeable, ONFT721Upgradeable, IOZNFTB
         super.approve(operator, tokenId);
     }
 
+    /// @dev `aproveForAll` wrapper to prevent the sender to approve a non-allowed operator
+    /// @param operator Address being approved
+    /// @param approved Approval status
+    function setApprovalForAll(address operator, bool approved)
+        public
+        override(ERC721Upgradeable, IERC721Upgradeable)
+        onlyAllowedOperatorApproval(operator)
+    {
+        super.setApprovalForAll(operator, approved);
+    }
+
     /// @dev `transferFrom` wrapper to prevent a non-allowed operator to transfer the NFT
     /// @param from Address to transfer from
     /// @param to Address to transfer to

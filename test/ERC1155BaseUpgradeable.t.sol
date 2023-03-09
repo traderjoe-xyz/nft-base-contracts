@@ -7,28 +7,11 @@ import {IERC1155Upgradeable} from "openzeppelin-upgradeable/token/ERC1155/IERC11
 import {IERC1155MetadataURIUpgradeable} from
     "openzeppelin-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol";
 
-import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/upgradeables/ERC1155BaseUpgradeable.sol";
 import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
 import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
 
-contract ERC1155BaseUpgradeableHarness is ERC1155BaseUpgradeable {
-    function initialize(address dummyAddress) external initializer {
-        __ERC1155Base_init(
-            "ipfs://{cid}/{id}", "1155 Base Upgradeable Harness", "1155EBUH", 500, dummyAddress, dummyAddress
-        );
-    }
-
-    function wrongInitialize(address dummyAddress) external {
-        __ERC1155Base_init(
-            "ipfs://{cid}/{id}", "1155 Base Upgradeable Harness", "1155EBUH", 500, dummyAddress, dummyAddress
-        );
-    }
-}
-
 contract ERC1155BaseUpgradeableTest is TestHelper {
     event URISet(string uri);
-
-    ERC1155BaseUpgradeableHarness erc1155Base;
 
     function setUp() public {
         erc1155Base = new ERC1155BaseUpgradeableHarness();

@@ -8,25 +8,12 @@ import {IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/IERC721U
 import {IERC721MetadataUpgradeable} from
     "openzeppelin-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
 
-import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/upgradeables/ERC721ABaseUpgradeable.sol";
 import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
 import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
-
-contract ERC721ABaseUpgradeableHarness is ERC721ABaseUpgradeable {
-    function initialize(address dummyAddress) external initializer initializerERC721A {
-        __ERC721ABase_init("ERC721A Base Upgradeable Harness", "EBUH", 500, dummyAddress, dummyAddress);
-    }
-
-    function wrongInitialize(address dummyAddress) external {
-        __ERC721ABase_init("ERC721A Base Upgradeable Harness", "EBUH", 500, dummyAddress, dummyAddress);
-    }
-}
 
 contract ERC721ABaseUpgradeableTest is TestHelper {
     event BaseURISet(string baseURI);
     event UnrevealedURISet(string unrevealedURI);
-
-    ERC721ABaseUpgradeableHarness erc721aBase;
 
     function setUp() public {
         erc721aBase = new ERC721ABaseUpgradeableHarness();

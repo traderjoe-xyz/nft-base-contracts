@@ -6,16 +6,6 @@ import "./TestHelper.sol";
 import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/upgradeables/OZNFTBaseUpgradeable.sol";
 import "./mocks/LZEndpointMock.sol";
 
-contract OZNFTBaseUpgradeableHarness is OZNFTBaseUpgradeable {
-    function initialize(address lzEndpoint, address dummyAddress) external initializer {
-        __OZNFTBase_init("OZNFT Base Upgradeable Harness", "OBUH", lzEndpoint, 500, dummyAddress, dummyAddress);
-    }
-
-    function mint(uint256 tokenId) external {
-        _mint(msg.sender, tokenId);
-    }
-}
-
 contract LayerZeroTest is TestHelper {
     uint16 chainId_A = 1;
     uint16 chainId_B = 2;
@@ -54,7 +44,9 @@ contract LayerZeroTest is TestHelper {
     }
 
     function test_SendToken(address alice, uint256 tokenId) public {
-        vm.assume(alice != address(0) && alice != address(this));
+        vm.assume(
+            alice != address(0) && alice != address(this) && alice != address(ozNFT_A) && alice != address(ozNFT_B)
+        );
         deal(alice, 10 ether);
 
         ozNFT_A.mint(tokenId);
