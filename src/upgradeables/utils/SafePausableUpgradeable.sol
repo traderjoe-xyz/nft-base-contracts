@@ -5,7 +5,7 @@ import {PausableUpgradeable} from "openzeppelin-upgradeable/security/PausableUpg
 import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
 
 import {SafeAccessControlEnumerableUpgradeable} from "./SafeAccessControlEnumerableUpgradeable.sol";
-import {ISafePausableUpgradeable} from "../interfaces/ISafePausableUpgradeable.sol";
+import {ISafePausableUpgradeable} from "../interfaces/utils/ISafePausableUpgradeable.sol";
 
 abstract contract SafePausableUpgradeable is
     SafeAccessControlEnumerableUpgradeable,

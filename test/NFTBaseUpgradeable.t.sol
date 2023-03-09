@@ -4,9 +4,9 @@ pragma solidity 0.8.13;
 import "./TestHelper.sol";
 
 import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "src/upgradeables/NFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/IPendingOwnableUpgradeable.sol";
+import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
 import {ISafeAccessControlEnumerableUpgradeable} from
-    "src/upgradeables/interfaces/ISafeAccessControlEnumerableUpgradeable.sol";
+    "src/upgradeables/interfaces/utils/ISafeAccessControlEnumerableUpgradeable.sol";
 
 contract NFTBaseUpgradeableHarness is NFTBaseUpgradeable {
     function initialize(address dummyAddress) external initializer {

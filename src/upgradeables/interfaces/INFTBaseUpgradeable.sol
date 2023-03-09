@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import {ISafePausableUpgradeable} from "./ISafePausableUpgradeable.sol";
+import {ISafePausableUpgradeable} from "./utils/ISafePausableUpgradeable.sol";
 
 interface INFTBaseUpgradeable is ISafePausableUpgradeable {
     error OperatorNotAllowed(address operator);

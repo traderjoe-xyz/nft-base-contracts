@@ -9,7 +9,7 @@ import {IERC1155MetadataURIUpgradeable} from
 
 import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/upgradeables/ERC1155BaseUpgradeable.sol";
 import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/IPendingOwnableUpgradeable.sol";
+import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
 
 contract ERC1155BaseUpgradeableHarness is ERC1155BaseUpgradeable {
     function initialize(address dummyAddress) external initializer {

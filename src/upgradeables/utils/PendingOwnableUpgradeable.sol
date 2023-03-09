@@ -6,7 +6,7 @@ import {
 } from "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
 import {Initializable} from "openzeppelin-upgradeable/proxy/utils/Initializable.sol";
 
-import {IPendingOwnableUpgradeable} from "../interfaces/IPendingOwnableUpgradeable.sol";
+import {IPendingOwnableUpgradeable} from "../interfaces/utils/IPendingOwnableUpgradeable.sol";
 
 /**
  * @title Pending Ownable

@@ -6,7 +6,7 @@ import "../TestHelper.sol";
 import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
 
 import {ISafeAccessControlEnumerableUpgradeable} from
-    "src/upgradeables/interfaces/ISafeAccessControlEnumerableUpgradeable.sol";
+    "src/upgradeables/interfaces/utils/ISafeAccessControlEnumerableUpgradeable.sol";
 
 contract SafePausableUpgradeableHarness is SafePausableUpgradeable {
     function initialize() external initializer {

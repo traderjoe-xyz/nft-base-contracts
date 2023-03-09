@@ -9,7 +9,7 @@ import {
 import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
 
 import {PendingOwnableUpgradeable} from "./PendingOwnableUpgradeable.sol";
-import {ISafeAccessControlEnumerableUpgradeable} from "../interfaces/ISafeAccessControlEnumerableUpgradeable.sol";
+import {ISafeAccessControlEnumerableUpgradeable} from "../interfaces/utils/ISafeAccessControlEnumerableUpgradeable.sol";
 
 abstract contract SafeAccessControlEnumerableUpgradeable is
     PendingOwnableUpgradeable,
