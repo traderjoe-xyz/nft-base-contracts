@@ -2,6 +2,7 @@
 pragma solidity 0.8.13;
 
 import {PausableUpgradeable} from "openzeppelin-upgradeable/security/PausableUpgradeable.sol";
+import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
 
 import {SafeAccessControlEnumerableUpgradeable} from "./SafeAccessControlEnumerableUpgradeable.sol";
 import {ISafePausableUpgradeable} from "../interfaces/ISafePausableUpgradeable.sol";
@@ -69,7 +70,7 @@ abstract contract SafePausableUpgradeable is
         public
         view
         virtual
-        override(SafeAccessControlEnumerableUpgradeable)
+        override(SafeAccessControlEnumerableUpgradeable, IERC165Upgradeable)
         returns (bool)
     {
         return interfaceId == type(ISafePausableUpgradeable).interfaceId

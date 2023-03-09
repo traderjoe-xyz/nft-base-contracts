@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-interface IPendingOwnableUpgradeable {
+import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
+
+interface IPendingOwnableUpgradeable is IERC165Upgradeable {
     error PendingOwnableUpgradeable__NotOwner();
     error PendingOwnableUpgradeable__NotPendingOwner();
     error PendingOwnableUpgradeable__AddressZero();

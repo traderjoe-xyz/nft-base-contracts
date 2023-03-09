@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import {ERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import {
+    ERC165Upgradeable, IERC165Upgradeable
+} from "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
 import {Initializable} from "openzeppelin-upgradeable/proxy/utils/Initializable.sol";
 
 import {IPendingOwnableUpgradeable} from "../interfaces/IPendingOwnableUpgradeable.sol";
@@ -127,7 +129,13 @@ abstract contract PendingOwnableUpgradeable is Initializable, ERC165Upgradeable,
      *
      * This function call must use less than 30 000 gas.
      */
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC165Upgradeable, IERC165Upgradeable)
+        returns (bool)
+    {
         return interfaceId == type(IPendingOwnableUpgradeable).interfaceId || super.supportsInterface(interfaceId);
     }
 

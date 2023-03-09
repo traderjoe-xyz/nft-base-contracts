@@ -6,6 +6,7 @@ import {
     AccessControlUpgradeable,
     IAccessControlUpgradeable
 } from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
 
 import {PendingOwnableUpgradeable} from "./PendingOwnableUpgradeable.sol";
 import {ISafeAccessControlEnumerableUpgradeable} from "../interfaces/ISafeAccessControlEnumerableUpgradeable.sol";
@@ -56,7 +57,7 @@ abstract contract SafeAccessControlEnumerableUpgradeable is
         public
         view
         virtual
-        override(PendingOwnableUpgradeable, AccessControlEnumerableUpgradeable)
+        override(PendingOwnableUpgradeable, AccessControlEnumerableUpgradeable, IERC165Upgradeable)
         returns (bool)
     {
         return PendingOwnableUpgradeable.supportsInterface(interfaceId)
