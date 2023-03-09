@@ -10,12 +10,12 @@ contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1
     /**
      * @notice Name of the NFT collection
      */
-    string public name;
+    string public override name;
 
     /**
      * @notice Symbol of the NFT collection
      */
-    string public symbol;
+    string public override symbol;
 
     function __ERC1155Base_init(
         string memory _uri,

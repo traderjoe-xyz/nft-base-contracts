@@ -8,6 +8,10 @@ import {INFTBaseUpgradeable} from "./INFTBaseUpgradeable.sol";
 interface IERC1155BaseUpgradeable is INFTBaseUpgradeable, IERC1155Upgradeable {
     event URISet(string uri);
 
+    function name() external view returns (string memory);
+
+    function symbol() external view returns (string memory);
+
     function supportsInterface(bytes4 interfaceId)
         external
         view

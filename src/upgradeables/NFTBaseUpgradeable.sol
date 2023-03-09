@@ -31,23 +31,23 @@ abstract contract NFTBaseUpgradeable is
      * @notice Contract filtering allowed operators, preventing unauthorized contract to transfer NFTs
      * By default, Joepegs contracts are subscribed to OpenSea's Curated Subscription Address at 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6
      */
-    IOperatorFilterRegistry public operatorFilterRegistry;
+    IOperatorFilterRegistry public override operatorFilterRegistry;
 
     /**
      * @notice The fees collected by Joepegs on the sale benefits
      * @dev In basis points e.g 100 for 1%
      */
-    uint256 public joeFeePercent;
+    uint256 public override joeFeePercent;
 
     /**
      * @notice The address to which the fees on the sale will be sent
      */
-    address public joeFeeCollector;
+    address public override joeFeeCollector;
 
     /**
      * @notice Start time when funds can be withdrawn
      */
-    uint256 public withdrawAVAXStartTime;
+    uint256 public override withdrawAVAXStartTime;
 
     /**
      * @notice Allow spending tokens from addresses with balance
@@ -101,7 +101,7 @@ abstract contract NFTBaseUpgradeable is
     /**
      * @notice Returns the project owner role
      */
-    function getProjectOwnerRole() public pure returns (bytes32) {
+    function getProjectOwnerRole() public pure override returns (bytes32) {
         return PROJECT_OWNER_ROLE;
     }
 
@@ -109,7 +109,7 @@ abstract contract NFTBaseUpgradeable is
      * @notice Sets a new withdraw AVAX start time
      * @param newWithdrawAVAXStartTime New withdraw AVAX start time
      */
-    function setWithdrawAVAXStartTime(uint256 newWithdrawAVAXStartTime) external onlyOwner {
+    function setWithdrawAVAXStartTime(uint256 newWithdrawAVAXStartTime) external override onlyOwner {
         withdrawAVAXStartTime = newWithdrawAVAXStartTime;
         emit WithdrawAVAXStartTimeSet(newWithdrawAVAXStartTime);
     }
@@ -118,7 +118,7 @@ abstract contract NFTBaseUpgradeable is
      * @notice Withdraw AVAX to the given recipient
      * @param to Recipient of the earned AVAX
      */
-    function withdrawAVAX(address to) external onlyOwnerOrRole(PROJECT_OWNER_ROLE) nonReentrant {
+    function withdrawAVAX(address to) external override onlyOwnerOrRole(PROJECT_OWNER_ROLE) nonReentrant {
         if (block.timestamp < withdrawAVAXStartTime || withdrawAVAXStartTime == 0) {
             revert NFTBase__WithdrawAVAXNotAvailable();
         }
@@ -149,7 +149,7 @@ abstract contract NFTBaseUpgradeable is
      * @notice Set the operator filter registry address
      * @param newOperatorFilterRegistry New operator filter registry
      */
-    function setOperatorFilterRegistryAddress(address newOperatorFilterRegistry) external onlyOwner {
+    function setOperatorFilterRegistryAddress(address newOperatorFilterRegistry) external override onlyOwner {
         _updateOperatorFilterRegistryAddress(IOperatorFilterRegistry(newOperatorFilterRegistry));
     }
 
@@ -158,7 +158,7 @@ abstract contract NFTBaseUpgradeable is
      * @param receiver Royalty fee collector
      * @param feePercent Royalty fee percent in basis point
      */
-    function setRoyaltyInfo(address receiver, uint96 feePercent) external onlyOwner {
+    function setRoyaltyInfo(address receiver, uint96 feePercent) external override onlyOwner {
         // Royalty fees are limited to 25%
         if (feePercent > MAXIMUM_ROYALTIES_PERCENTAGE) {
             revert NFTBase__InvalidRoyaltyInfo();
