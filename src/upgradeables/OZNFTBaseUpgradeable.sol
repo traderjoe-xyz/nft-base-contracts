@@ -5,11 +5,6 @@ import {ONFT721Upgradeable} from "./layerZero/ONFT721Upgradeable.sol";
 import {ERC721Upgradeable, IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
-import {PendingOwnableUpgradeable, IPendingOwnableUpgradeable} from "./utils/PendingOwnableUpgradeable.sol";
-import {
-    SafeAccessControlEnumerableUpgradeable,
-    ISafeAccessControlEnumerableUpgradeable
-} from "./utils/SafeAccessControlEnumerableUpgradeable.sol";
 import {IOZNFTBaseUpgradeable} from "./interfaces/IOZNFTBaseUpgradeable.sol";
 
 contract OZNFTBaseUpgradeable is NFTBaseUpgradeable, ONFT721Upgradeable, IOZNFTBaseUpgradeable {

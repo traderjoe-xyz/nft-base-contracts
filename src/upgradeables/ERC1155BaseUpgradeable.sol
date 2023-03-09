@@ -3,8 +3,8 @@ pragma solidity 0.8.13;
 
 import {ERC1155Upgradeable, IERC1155Upgradeable} from "openzeppelin-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 
-import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
-import {IERC1155BaseUpgradeable, IERC165Upgradeable} from "./interfaces/IERC1155BaseUpgradeable.sol";
+import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
+import {IERC1155BaseUpgradeable} from "./interfaces/IERC1155BaseUpgradeable.sol";
 
 contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1155BaseUpgradeable {
     /**

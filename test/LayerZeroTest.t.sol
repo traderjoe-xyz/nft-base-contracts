@@ -3,8 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./TestHelper.sol";
 
-import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/upgradeables/OZNFTBaseUpgradeable.sol";
-import "./mocks/LZEndpointMock.sol";
+import {LZEndpointMock} from "./mocks/LZEndpointMock.sol";
 
 contract LayerZeroTest is TestHelper {
     uint16 chainId_A = 1;

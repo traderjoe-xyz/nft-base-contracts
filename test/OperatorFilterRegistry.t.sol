@@ -5,13 +5,8 @@ import "./TestHelper.sol";
 
 import {
     OperatorFilterRegistry,
-    OperatorFilterRegistryErrorsAndEvents,
-    IOperatorFilterRegistry
+    OperatorFilterRegistryErrorsAndEvents
 } from "operator-filter-registry/src/OperatorFilterRegistry.sol";
-
-import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/upgradeables/ERC721ABaseUpgradeable.sol";
-import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/upgradeables/ERC1155BaseUpgradeable.sol";
-import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/upgradeables/OZNFTBaseUpgradeable.sol";
 
 contract OperatorRegistryTest is TestHelper {
     address constant DEFAULT_SUBSCRIPTION = 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6;

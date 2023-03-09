@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import {INFTBaseUpgradeable} from "./INFTBaseUpgradeable.sol";
 import {IERC721AUpgradeable} from "ERC721A-Upgradeable/IERC721AUpgradeable.sol";
+
+import {INFTBaseUpgradeable} from "./INFTBaseUpgradeable.sol";
 
 interface IERC721ABaseUpgradeable is INFTBaseUpgradeable, IERC721AUpgradeable {
     event BaseURISet(string baseURI);
