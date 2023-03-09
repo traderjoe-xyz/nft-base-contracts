@@ -4,7 +4,9 @@ pragma solidity 0.8.13;
 import "../TestHelper.sol";
 
 import {
-    PendingOwnableUpgradeable, IPendingOwnableUpgradeable
+    PendingOwnableUpgradeable,
+    IPendingOwnableUpgradeable,
+    IERC165Upgradeable
 } from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
 
 contract PendingOwnableUpgradeableHarness is PendingOwnableUpgradeable {
@@ -162,14 +164,18 @@ contract PendingOwnableUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        // IERC165Upgradeable
-        assertTrue(pendingOwnable.supportsInterface(0x01ffc9a7), "test_SupportInterface::1");
-        // IPendingOwnableUpgradeable
-        assertTrue(pendingOwnable.supportsInterface(0x45aea0ae), "test_SupportInterface::1");
+        assertTrue(
+            pendingOwnable.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && pendingOwnable.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId),
+            "test_SupportInterface::1"
+        );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
-        vm.assume(interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7);
+        vm.assume(
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+        );
 
         assertFalse(pendingOwnable.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");
     }

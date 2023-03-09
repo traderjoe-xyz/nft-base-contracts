@@ -43,9 +43,7 @@ contract LayerZeroTest is TestHelper {
     }
 
     function test_SendToken(address alice, uint256 tokenId) public {
-        vm.assume(
-            alice != address(0) && alice != address(this) && alice != address(ozNFT_A) && alice != address(ozNFT_B)
-        );
+        vm.assume(alice != address(0) && alice.code.length == 0);
         deal(alice, 10 ether);
 
         ozNFT_A.mint(tokenId);

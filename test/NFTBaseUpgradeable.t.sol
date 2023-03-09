@@ -3,10 +3,24 @@ pragma solidity 0.8.13;
 
 import "./TestHelper.sol";
 
+import {IAccessControlUpgradeable} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+
+import {
+    PendingOwnableUpgradeable,
+    IPendingOwnableUpgradeable,
+    IERC165Upgradeable
+} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
+import {IAccessControlEnumerableUpgradeable} from
+    "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import {
+    SafeAccessControlEnumerableUpgradeable,
+    ISafeAccessControlEnumerableUpgradeable
+} from "src/upgradeables/utils/SafeAccessControlEnumerableUpgradeable.sol";
+
+import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
+
 import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "src/upgradeables/NFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
-import {ISafeAccessControlEnumerableUpgradeable} from
-    "src/upgradeables/interfaces/utils/ISafeAccessControlEnumerableUpgradeable.sol";
+import {IOperatorFilterRegistry} from "operator-filter-registry/src/IOperatorFilterRegistry.sol";
 
 contract NFTBaseUpgradeableHarness is NFTBaseUpgradeable {
     function initialize(address dummyAddress) external initializer {
@@ -242,20 +256,28 @@ contract NFTBaseUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        // ISafePausableUpgradeable
-        assertTrue(nftBase.supportsInterface(0x7260a8cd), "test_SupportInterface::1");
-        // IERC2981Upgradeable
-        assertTrue(nftBase.supportsInterface(0x2a55205a), "test_SupportInterface::2");
-        // INFTBaseUpgradeable
-        // assertTrue(nftBase.supportsInterface(0x331bf3b6), "test_SupportInterface::3");
+        assertTrue(
+            nftBase.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && nftBase.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && nftBase.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && nftBase.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && nftBase.supportsInterface(type(ISafePausableUpgradeable).interfaceId)
+                && nftBase.supportsInterface(type(IERC2981Upgradeable).interfaceId)
+                && nftBase.supportsInterface(type(INFTBaseUpgradeable).interfaceId),
+            "test_SupportInterface::1"
+        );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b && interfaceId != 0x7260a8cd && interfaceId != 0x2a55205a
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(ISafePausableUpgradeable).interfaceId
+                && interfaceId != type(IERC2981Upgradeable).interfaceId
+                && interfaceId != type(INFTBaseUpgradeable).interfaceId
         );
-        // && interfaceId != 0x331bf3b6
 
         assertFalse(nftBase.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");
     }

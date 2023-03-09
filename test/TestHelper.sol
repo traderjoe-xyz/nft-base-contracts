@@ -3,9 +3,44 @@ pragma solidity 0.8.13;
 
 import "forge-std/Test.sol";
 
+import {
+    IAccessControlUpgradeable,
+    IAccessControlEnumerableUpgradeable
+} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import {
+    IERC721Upgradeable,
+    IERC721MetadataUpgradeable
+} from "openzeppelin-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
+import {
+    IERC1155Upgradeable,
+    IERC1155MetadataURIUpgradeable
+} from "openzeppelin-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol";
+
+import {IERC2981Upgradeable} from "openzeppelin-upgradeable/token/common/ERC2981Upgradeable.sol";
+
+import {IERC721AUpgradeable} from "ERC721A-Upgradeable/IERC721AUpgradeable.sol";
+import {IOperatorFilterRegistry} from "operator-filter-registry/src/IOperatorFilterRegistry.sol";
+import {
+    IONFT721Upgradeable,
+    IONFT721CoreUpgradeable
+} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+
+import {
+    PendingOwnableUpgradeable,
+    IPendingOwnableUpgradeable,
+    IERC165Upgradeable
+} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
+import {
+    SafeAccessControlEnumerableUpgradeable,
+    ISafeAccessControlEnumerableUpgradeable
+} from "src/upgradeables/utils/SafeAccessControlEnumerableUpgradeable.sol";
+import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
+
 import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/upgradeables/OZNFTBaseUpgradeable.sol";
 import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/upgradeables/ERC721ABaseUpgradeable.sol";
 import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/upgradeables/ERC1155BaseUpgradeable.sol";
+
+import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "src/upgradeables/NFTBaseUpgradeable.sol";
 
 abstract contract TestHelper is Test {
     address payable internal joepegs = payable(makeAddr("joepegs"));

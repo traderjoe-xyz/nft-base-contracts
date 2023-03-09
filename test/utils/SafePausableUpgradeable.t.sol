@@ -3,10 +3,21 @@ pragma solidity 0.8.13;
 
 import "../TestHelper.sol";
 
-import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
+import {IAccessControlUpgradeable} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 
-import {ISafeAccessControlEnumerableUpgradeable} from
-    "src/upgradeables/interfaces/utils/ISafeAccessControlEnumerableUpgradeable.sol";
+import {
+    PendingOwnableUpgradeable,
+    IPendingOwnableUpgradeable,
+    IERC165Upgradeable
+} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
+import {IAccessControlEnumerableUpgradeable} from
+    "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import {
+    SafeAccessControlEnumerableUpgradeable,
+    ISafeAccessControlEnumerableUpgradeable
+} from "src/upgradeables/utils/SafeAccessControlEnumerableUpgradeable.sol";
+
+import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
 
 contract SafePausableUpgradeableHarness is SafePausableUpgradeable {
     function initialize() external initializer {
@@ -160,16 +171,25 @@ contract SafePausableUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        // ISafePausableUpgradeable
-        assertTrue(pausable.supportsInterface(0x7260a8cd), "test_SupportInterface::1");
-        // IAccessControlEnumerableUpgradeable
-        assertTrue(pausable.supportsInterface(0x5a05180f), "test_SupportInterface::2");
+        assertTrue(
+            pausable.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && pausable.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && pausable.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && pausable.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && pausable.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && pausable.supportsInterface(type(ISafePausableUpgradeable).interfaceId),
+            "test_SupportInterface::1"
+        );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b && interfaceId != 0x7260a8cd
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(ISafePausableUpgradeable).interfaceId
         );
 
         assertFalse(pausable.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");

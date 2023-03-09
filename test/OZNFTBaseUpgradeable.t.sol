@@ -3,17 +3,6 @@ pragma solidity 0.8.13;
 
 import "./TestHelper.sol";
 
-import {
-    IONFT721Upgradeable,
-    IONFT721CoreUpgradeable
-} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
-import {IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/IERC721Upgradeable.sol";
-import {IERC721MetadataUpgradeable} from
-    "openzeppelin-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
-
-import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
-
 contract OZNFTBaseUpgradeableTest is TestHelper {
     event BaseURISet(string baseURI);
     event UnrevealedURISet(string unrevealedURI);
@@ -91,24 +80,35 @@ contract OZNFTBaseUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        assertTrue(ozNftBase.supportsInterface(type(IOZNFTBaseUpgradeable).interfaceId), "test_SupportInterface::1");
-        assertTrue(ozNftBase.supportsInterface(type(IONFT721Upgradeable).interfaceId), "test_SupportInterface::2");
-        assertTrue(ozNftBase.supportsInterface(type(IONFT721CoreUpgradeable).interfaceId), "test_SupportInterface::2");
-        assertTrue(ozNftBase.supportsInterface(type(INFTBaseUpgradeable).interfaceId), "test_SupportInterface::3");
-        assertTrue(ozNftBase.supportsInterface(type(IERC721Upgradeable).interfaceId), "test_SupportInterface::4");
         assertTrue(
-            ozNftBase.supportsInterface(type(IERC721MetadataUpgradeable).interfaceId), "test_SupportInterface::4"
+            ozNftBase.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(ISafePausableUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(INFTBaseUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IERC2981Upgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IOZNFTBaseUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IONFT721Upgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IONFT721CoreUpgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IERC721Upgradeable).interfaceId)
+                && ozNftBase.supportsInterface(type(IERC721MetadataUpgradeable).interfaceId),
+            "test_SupportInterface::1"
         );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b && interfaceId != 0x7260a8cd && interfaceId != 0x2a55205a
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(ISafePausableUpgradeable).interfaceId
+                && interfaceId != type(INFTBaseUpgradeable).interfaceId
+                && interfaceId != type(IERC2981Upgradeable).interfaceId
                 && interfaceId != type(IOZNFTBaseUpgradeable).interfaceId
                 && interfaceId != type(IONFT721Upgradeable).interfaceId
                 && interfaceId != type(IONFT721CoreUpgradeable).interfaceId
-                && interfaceId != type(INFTBaseUpgradeable).interfaceId
                 && interfaceId != type(IERC721Upgradeable).interfaceId
                 && interfaceId != type(IERC721MetadataUpgradeable).interfaceId
         );

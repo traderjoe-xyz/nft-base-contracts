@@ -3,12 +3,19 @@ pragma solidity 0.8.13;
 
 import "../TestHelper.sol";
 
+import {IAccessControlUpgradeable} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+
+import {
+    PendingOwnableUpgradeable,
+    IPendingOwnableUpgradeable,
+    IERC165Upgradeable
+} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
+import {IAccessControlEnumerableUpgradeable} from
+    "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 import {
     SafeAccessControlEnumerableUpgradeable,
     ISafeAccessControlEnumerableUpgradeable
 } from "src/upgradeables/utils/SafeAccessControlEnumerableUpgradeable.sol";
-
-import {IAccessControlUpgradeable} from "openzeppelin-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 
 contract SafeAccessControlEnumerableUpgradeableHarness is SafeAccessControlEnumerableUpgradeable {
     function initialize() external initializer {
@@ -210,18 +217,23 @@ contract SafeAccessControlEnumerableUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        // IAccessControlUpgradeable
-        assertTrue(accessControl.supportsInterface(0x7965db0b), "test_SupportInterface::1");
-        // IAccessControlEnumerableUpgradeable
-        assertTrue(accessControl.supportsInterface(0x5a05180f), "test_SupportInterface::2");
-        // IPendingOwnableUpgradeable
-        assertTrue(accessControl.supportsInterface(0x45aea0ae), "test_SupportInterface::3");
+        assertTrue(
+            accessControl.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && accessControl.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && accessControl.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && accessControl.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && accessControl.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId),
+            "test_SupportInterface::1"
+        );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
         );
 
         assertFalse(accessControl.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");

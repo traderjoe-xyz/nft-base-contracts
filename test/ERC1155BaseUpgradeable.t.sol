@@ -3,13 +3,6 @@ pragma solidity 0.8.13;
 
 import "./TestHelper.sol";
 
-import {IERC1155Upgradeable} from "openzeppelin-upgradeable/token/ERC1155/IERC1155Upgradeable.sol";
-import {IERC1155MetadataURIUpgradeable} from
-    "openzeppelin-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol";
-
-import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
-
 contract ERC1155BaseUpgradeableTest is TestHelper {
     event URISet(string uri);
 
@@ -75,22 +68,33 @@ contract ERC1155BaseUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        assertTrue(erc1155Base.supportsInterface(type(IERC1155BaseUpgradeable).interfaceId), "test_SupportInterface::1");
-        assertTrue(erc1155Base.supportsInterface(type(IERC1155Upgradeable).interfaceId), "test_SupportInterface::2");
         assertTrue(
-            erc1155Base.supportsInterface(type(IERC1155MetadataURIUpgradeable).interfaceId), "test_SupportInterface::2"
+            erc1155Base.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(ISafePausableUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IERC2981Upgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(INFTBaseUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IERC1155BaseUpgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IERC1155Upgradeable).interfaceId)
+                && erc1155Base.supportsInterface(type(IERC1155MetadataURIUpgradeable).interfaceId),
+            "test_SupportInterface::1"
         );
-        assertTrue(erc1155Base.supportsInterface(type(INFTBaseUpgradeable).interfaceId), "test_SupportInterface::3");
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b && interfaceId != 0x7260a8cd && interfaceId != 0x2a55205a
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(ISafePausableUpgradeable).interfaceId
+                && interfaceId != type(IERC2981Upgradeable).interfaceId
                 && interfaceId != type(INFTBaseUpgradeable).interfaceId
+                && interfaceId != type(IERC1155BaseUpgradeable).interfaceId
                 && interfaceId != type(IERC1155Upgradeable).interfaceId
                 && interfaceId != type(IERC1155MetadataURIUpgradeable).interfaceId
-                && interfaceId != type(IERC1155BaseUpgradeable).interfaceId
         );
 
         assertFalse(erc1155Base.supportsInterface(interfaceId), "test_DoesNotSupportOtherInterfaces::1");

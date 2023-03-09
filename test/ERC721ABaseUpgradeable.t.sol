@@ -3,14 +3,6 @@ pragma solidity 0.8.13;
 
 import "./TestHelper.sol";
 
-import {IERC721AUpgradeable} from "ERC721A-Upgradeable/IERC721AUpgradeable.sol";
-import {IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/IERC721Upgradeable.sol";
-import {IERC721MetadataUpgradeable} from
-    "openzeppelin-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
-
-import {INFTBaseUpgradeable} from "src/upgradeables/interfaces/INFTBaseUpgradeable.sol";
-import {IPendingOwnableUpgradeable} from "src/upgradeables/interfaces/utils/IPendingOwnableUpgradeable.sol";
-
 contract ERC721ABaseUpgradeableTest is TestHelper {
     event BaseURISet(string baseURI);
     event UnrevealedURISet(string unrevealedURI);
@@ -89,22 +81,31 @@ contract ERC721ABaseUpgradeableTest is TestHelper {
     }
 
     function test_SupportInterface() public {
-        assertTrue(erc721aBase.supportsInterface(type(IERC721ABaseUpgradeable).interfaceId), "test_SupportInterface::1");
-        assertTrue(erc721aBase.supportsInterface(type(IERC721AUpgradeable).interfaceId), "test_SupportInterface::2");
-        assertTrue(erc721aBase.supportsInterface(type(INFTBaseUpgradeable).interfaceId), "test_SupportInterface::3");
-        assertTrue(erc721aBase.supportsInterface(type(IERC721Upgradeable).interfaceId), "test_SupportInterface::4");
         assertTrue(
-            erc721aBase.supportsInterface(type(IERC721MetadataUpgradeable).interfaceId), "test_SupportInterface::4"
+            erc721aBase.supportsInterface(type(IERC165Upgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IPendingOwnableUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IAccessControlUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IAccessControlEnumerableUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(ISafePausableUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IERC2981Upgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(INFTBaseUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IERC721ABaseUpgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IERC721Upgradeable).interfaceId)
+                && erc721aBase.supportsInterface(type(IERC721MetadataUpgradeable).interfaceId),
+            "test_SupportInterface::1"
         );
     }
 
     function test_DoesNotSupportOtherInterfaces(bytes4 interfaceId) public {
         vm.assume(
-            interfaceId != 0x45aea0ae && interfaceId != 0x01ffc9a7 && interfaceId != 0x5a05180f
-                && interfaceId != 0x7965db0b && interfaceId != 0x7260a8cd && interfaceId != 0x2a55205a
-                && interfaceId != type(IERC721ABaseUpgradeable).interfaceId
-                && interfaceId != type(IERC721AUpgradeable).interfaceId
+            interfaceId != type(IERC165Upgradeable).interfaceId
+                && interfaceId != type(IPendingOwnableUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlUpgradeable).interfaceId
+                && interfaceId != type(IAccessControlEnumerableUpgradeable).interfaceId
+                && interfaceId != type(ISafePausableUpgradeable).interfaceId
+                && interfaceId != type(IERC2981Upgradeable).interfaceId
                 && interfaceId != type(INFTBaseUpgradeable).interfaceId
+                && interfaceId != type(IERC721ABaseUpgradeable).interfaceId
                 && interfaceId != type(IERC721Upgradeable).interfaceId
                 && interfaceId != type(IERC721MetadataUpgradeable).interfaceId
         );
