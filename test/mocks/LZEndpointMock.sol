@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.13;
 
-import "solidity-examples/interfaces/ILayerZeroReceiver.sol";
-import "solidity-examples/interfaces/ILayerZeroEndpoint.sol";
-import "solidity-examples/libraries/LzLib.sol";
-import "forge-std/console.sol";
+import {ILayerZeroReceiver} from "solidity-examples/interfaces/ILayerZeroReceiver.sol";
+import {ILayerZeroEndpoint} from "solidity-examples/interfaces/ILayerZeroEndpoint.sol";
+import {LzLib} from "solidity-examples/libraries/LzLib.sol";
 
 /*
 like a real LayerZero endpoint but can be mocked, which handle message transmission, verification, and receipt.

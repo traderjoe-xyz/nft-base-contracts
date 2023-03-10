@@ -7,7 +7,7 @@ import {ERC721Upgradeable, IERC721Upgradeable} from "openzeppelin-upgradeable/to
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
 import {IOZNFTBaseUpgradeable} from "./interfaces/IOZNFTBaseUpgradeable.sol";
 
-contract OZNFTBaseUpgradeable is NFTBaseUpgradeable, ONFT721Upgradeable, IOZNFTBaseUpgradeable {
+abstract contract OZNFTBaseUpgradeable is NFTBaseUpgradeable, ONFT721Upgradeable, IOZNFTBaseUpgradeable {
     /**
      * @notice Token URI after collection reveal
      */

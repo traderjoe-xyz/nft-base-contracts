@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
-import "./ONFT721CoreUpgradeable.sol";
-import "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+import {ERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
+import {IONFT721Upgradeable} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+
+import {ONFT721CoreUpgradeable} from "./ONFT721CoreUpgradeable.sol";
 
 // NOTE: this ONFT contract has no public minting logic.
 // must implement your own minting logic in child classes
-contract ONFT721Upgradeable is ONFT721CoreUpgradeable, ERC721Upgradeable, IONFT721Upgradeable {
+abstract contract ONFT721Upgradeable is ONFT721CoreUpgradeable, ERC721Upgradeable, IONFT721Upgradeable {
     function __ONFT721Upgradeable_init(string memory _name, string memory _symbol, address _lzEndpoint)
         internal
         onlyInitializing

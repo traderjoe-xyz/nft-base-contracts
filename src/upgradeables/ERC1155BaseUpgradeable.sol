@@ -6,7 +6,7 @@ import {ERC1155Upgradeable, IERC1155Upgradeable} from "openzeppelin-upgradeable/
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
 import {IERC1155BaseUpgradeable} from "./interfaces/IERC1155BaseUpgradeable.sol";
 
-contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1155BaseUpgradeable {
+abstract contract ERC1155BaseUpgradeable is NFTBaseUpgradeable, ERC1155Upgradeable, IERC1155BaseUpgradeable {
     /**
      * @notice Name of the NFT collection
      */

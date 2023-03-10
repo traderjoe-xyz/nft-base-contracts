@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import "./LzAppUpgradeable.sol";
+import {LzAppUpgradeable} from "./LzAppUpgradeable.sol";
+import {SafePausableUpgradeable} from "../utils/SafePausableUpgradeable.sol";
 
 /*
  * the default LayerZero messaging behaviour is blocking, i.e. any failed message will block the channel

@@ -26,6 +26,13 @@ import {
 } from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
 
 import {
+    OperatorFilterRegistry,
+    OperatorFilterRegistryErrorsAndEvents
+} from "operator-filter-registry/src/OperatorFilterRegistry.sol";
+
+import {LZEndpointMock} from "./mocks/LZEndpointMock.sol";
+
+import {
     PendingOwnableUpgradeable,
     IPendingOwnableUpgradeable,
     IERC165Upgradeable

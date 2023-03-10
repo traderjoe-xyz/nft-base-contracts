@@ -3,12 +3,6 @@ pragma solidity 0.8.13;
 
 import "../TestHelper.sol";
 
-import {
-    PendingOwnableUpgradeable,
-    IPendingOwnableUpgradeable,
-    IERC165Upgradeable
-} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
-
 contract PendingOwnableUpgradeableHarness is PendingOwnableUpgradeable {
     function initialize() external initializer {
         __PendingOwnable_init();

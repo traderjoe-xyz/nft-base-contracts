@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
-import "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
-import "./NonblockingLzAppUpgradeable.sol";
-import "solidity-examples-upgradeable/token/ONFT721/IONFT721CoreUpgradeable.sol";
+import {
+    ERC165Upgradeable, IERC165Upgradeable
+} from "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import {IONFT721CoreUpgradeable} from "solidity-examples-upgradeable/token/ONFT721/IONFT721CoreUpgradeable.sol";
+
+import {NonblockingLzAppUpgradeable} from "./NonblockingLzAppUpgradeable.sol";
+import {SafePausableUpgradeable} from "../utils/SafePausableUpgradeable.sol";
 
 abstract contract ONFT721CoreUpgradeable is NonblockingLzAppUpgradeable, IONFT721CoreUpgradeable {
     uint256 public constant NO_EXTRA_GAS = 0;

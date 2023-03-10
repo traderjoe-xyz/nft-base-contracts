@@ -3,8 +3,6 @@ pragma solidity ^0.8.0;
 
 import "./TestHelper.sol";
 
-import {LZEndpointMock} from "./mocks/LZEndpointMock.sol";
-
 contract LayerZeroTest is TestHelper {
     uint16 chainId_A = 1;
     uint16 chainId_B = 2;

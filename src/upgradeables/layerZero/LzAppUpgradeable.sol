@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import "solidity-examples-upgradeable/interfaces/ILayerZeroReceiverUpgradeable.sol";
-import "solidity-examples-upgradeable/interfaces/ILayerZeroUserApplicationConfigUpgradeable.sol";
-import "solidity-examples-upgradeable/interfaces/ILayerZeroEndpointUpgradeable.sol";
+import {ILayerZeroReceiverUpgradeable} from "solidity-examples-upgradeable/interfaces/ILayerZeroReceiverUpgradeable.sol";
+import {ILayerZeroUserApplicationConfigUpgradeable} from
+    "solidity-examples-upgradeable/interfaces/ILayerZeroUserApplicationConfigUpgradeable.sol";
+import {ILayerZeroEndpointUpgradeable} from "solidity-examples-upgradeable/interfaces/ILayerZeroEndpointUpgradeable.sol";
 
-import "../utils/SafePausableUpgradeable.sol";
+import {SafePausableUpgradeable} from "../utils/SafePausableUpgradeable.sol";
 
 /*
  * a generic LzReceiver implementation

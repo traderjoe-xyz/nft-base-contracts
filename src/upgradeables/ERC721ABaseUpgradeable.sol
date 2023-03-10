@@ -6,7 +6,7 @@ import {ERC721AUpgradeable, IERC721AUpgradeable} from "ERC721A-Upgradeable/ERC72
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
 import {IERC721ABaseUpgradeable} from "./interfaces/IERC721ABaseUpgradeable.sol";
 
-contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC721ABaseUpgradeable {
+abstract contract ERC721ABaseUpgradeable is NFTBaseUpgradeable, ERC721AUpgradeable, IERC721ABaseUpgradeable {
     /**
      * @notice Token URI after collection reveal
      */

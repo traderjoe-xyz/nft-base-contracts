@@ -3,11 +3,6 @@ pragma solidity ^0.8.0;
 
 import "./TestHelper.sol";
 
-import {
-    OperatorFilterRegistry,
-    OperatorFilterRegistryErrorsAndEvents
-} from "operator-filter-registry/src/OperatorFilterRegistry.sol";
-
 contract OperatorRegistryTest is TestHelper {
     address constant DEFAULT_SUBSCRIPTION = 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6;
     OperatorFilterRegistry constant registry = OperatorFilterRegistry(0x000000000000AAeB6D7670E522A718067333cd4E);
