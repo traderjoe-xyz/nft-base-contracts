@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
-import {ILayerZeroReceiverUpgradeable} from "solidity-examples-upgradeable/interfaces/ILayerZeroReceiverUpgradeable.sol";
+import {ILayerZeroReceiverUpgradeable} from
+    "solidity-examples/contracts/contracts-upgradable/interfaces/ILayerZeroReceiverUpgradeable.sol";
 import {ILayerZeroUserApplicationConfigUpgradeable} from
-    "solidity-examples-upgradeable/interfaces/ILayerZeroUserApplicationConfigUpgradeable.sol";
-import {ILayerZeroEndpointUpgradeable} from "solidity-examples-upgradeable/interfaces/ILayerZeroEndpointUpgradeable.sol";
+    "solidity-examples/contracts/contracts-upgradable/interfaces/ILayerZeroUserApplicationConfigUpgradeable.sol";
+import {ILayerZeroEndpointUpgradeable} from
+    "solidity-examples/contracts/contracts-upgradable/interfaces/ILayerZeroEndpointUpgradeable.sol";
 
 import {SafePausableUpgradeable} from "../utils/SafePausableUpgradeable.sol";
 
@@ -137,5 +139,5 @@ abstract contract LzAppUpgradeable is
      * variables without shifting down storage in the inheritance chain.
      * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
      */
-    uint256[50] private __gap;
+    uint256[47] private __gap;
 }

@@ -3,7 +3,8 @@ pragma solidity 0.8.13;
 
 import {ERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import {IERC165Upgradeable} from "openzeppelin-upgradeable/utils/introspection/IERC165Upgradeable.sol";
-import {IONFT721Upgradeable} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+import {IONFT721Upgradeable} from
+    "solidity-examples/contracts/contracts-upgradable/token/ONFT721/IONFT721Upgradeable.sol";
 
 import {ONFT721CoreUpgradeable} from "./ONFT721CoreUpgradeable.sol";
 

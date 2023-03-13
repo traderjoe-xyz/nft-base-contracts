@@ -28,6 +28,12 @@ abstract contract NFTBaseUpgradeable is
     bytes32 private constant PROJECT_OWNER_ROLE = keccak256("PROJECT_OWNER_ROLE");
 
     /**
+     * @dev OpenSea's filter registry and subscription address
+     */
+    address private constant OPENSEA_FILTER_REGISTRY = 0x000000000000AAeB6D7670E522A718067333cd4E;
+    address private constant OPENSEA_SUBSCRIPTION = 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6;
+
+    /**
      * @notice Contract filtering allowed operators, preventing unauthorized contract to transfer NFTs
      * By default, Joepegs contracts are subscribed to OpenSea's Curated Subscription Address at 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6
      */
@@ -84,11 +90,10 @@ abstract contract NFTBaseUpgradeable is
         onlyInitializing
     {
         // Initialize the operator filter registry and subscribe to OpenSea's list
-        IOperatorFilterRegistry _operatorFilterRegistry =
-            IOperatorFilterRegistry(0x000000000000AAeB6D7670E522A718067333cd4E);
+        IOperatorFilterRegistry _operatorFilterRegistry = IOperatorFilterRegistry(OPENSEA_FILTER_REGISTRY);
 
         if (address(_operatorFilterRegistry).code.length > 0) {
-            _operatorFilterRegistry.registerAndSubscribe(address(this), 0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6);
+            _operatorFilterRegistry.registerAndSubscribe(address(this), OPENSEA_SUBSCRIPTION);
         }
 
         _updateOperatorFilterRegistryAddress(_operatorFilterRegistry);
@@ -125,22 +130,16 @@ abstract contract NFTBaseUpgradeable is
 
         uint256 amount = address(this).balance;
         uint256 fee;
-        bool sent;
+        uint256 feePercent = joeFeePercent;
 
-        if (joeFeePercent > 0) {
-            fee = (amount * joeFeePercent) / BASIS_POINT_PRECISION;
+        if (feePercent > 0) {
+            fee = (amount * feePercent) / BASIS_POINT_PRECISION;
             amount = amount - fee;
 
-            (sent,) = joeFeeCollector.call{value: fee}("");
-            if (!sent) {
-                revert NFTBase__TransferFailed();
-            }
+            _send(joeFeeCollector, fee);
         }
 
-        (sent,) = to.call{value: amount}("");
-        if (!sent) {
-            revert NFTBase__TransferFailed();
-        }
+        _send(to, amount);
 
         emit AvaxWithdraw(to, amount, fee);
     }
@@ -228,6 +227,18 @@ abstract contract NFTBaseUpgradeable is
     }
 
     /**
+     * @dev Sends AVAX to the given address
+     * @param to Address to send AVAX to
+     * @param amount Amount of AVAX to send
+     */
+    function _send(address to, uint256 amount) internal {
+        (bool success,) = to.call{value: amount}("");
+        if (!success) {
+            revert NFTBase__TransferFailed();
+        }
+    }
+
+    /**
      * @dev Verifies that enough AVAX has been sent by the sender and refunds the extra tokens if any
      * @param price The price paid by the sender for minting NFTs
      */
@@ -242,4 +253,11 @@ abstract contract NFTBaseUpgradeable is
             }
         }
     }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[46] private __gap;
 }

@@ -23,7 +23,7 @@ import {IOperatorFilterRegistry} from "operator-filter-registry/src/IOperatorFil
 import {
     IONFT721Upgradeable,
     IONFT721CoreUpgradeable
-} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+} from "solidity-examples/contracts/contracts-upgradable/token/ONFT721/IONFT721Upgradeable.sol";
 
 import {
     OperatorFilterRegistry,

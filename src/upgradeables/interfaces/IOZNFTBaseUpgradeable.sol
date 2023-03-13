@@ -4,7 +4,7 @@ pragma solidity 0.8.13;
 import {
     IONFT721Upgradeable,
     IERC165Upgradeable
-} from "solidity-examples-upgradeable/token/ONFT721/IONFT721Upgradeable.sol";
+} from "solidity-examples/contracts/contracts-upgradable/token/ONFT721/IONFT721Upgradeable.sol";
 
 import {INFTBaseUpgradeable} from "./INFTBaseUpgradeable.sol";
 

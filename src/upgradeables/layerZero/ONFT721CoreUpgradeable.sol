@@ -4,7 +4,8 @@ pragma solidity 0.8.13;
 import {
     ERC165Upgradeable, IERC165Upgradeable
 } from "openzeppelin-upgradeable/utils/introspection/ERC165Upgradeable.sol";
-import {IONFT721CoreUpgradeable} from "solidity-examples-upgradeable/token/ONFT721/IONFT721CoreUpgradeable.sol";
+import {IONFT721CoreUpgradeable} from
+    "solidity-examples/contracts/contracts-upgradable/token/ONFT721/IONFT721CoreUpgradeable.sol";
 
 import {NonblockingLzAppUpgradeable} from "./NonblockingLzAppUpgradeable.sol";
 import {SafePausableUpgradeable} from "../utils/SafePausableUpgradeable.sol";
@@ -114,5 +115,5 @@ abstract contract ONFT721CoreUpgradeable is NonblockingLzAppUpgradeable, IONFT72
      * variables without shifting down storage in the inheritance chain.
      * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
      */
-    uint256[50] private __gap;
+    uint256[49] private __gap;
 }
