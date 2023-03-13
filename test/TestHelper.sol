@@ -36,18 +36,18 @@ import {
     PendingOwnableUpgradeable,
     IPendingOwnableUpgradeable,
     IERC165Upgradeable
-} from "src/upgradeables/utils/PendingOwnableUpgradeable.sol";
+} from "src/utils/PendingOwnableUpgradeable.sol";
 import {
     SafeAccessControlEnumerableUpgradeable,
     ISafeAccessControlEnumerableUpgradeable
-} from "src/upgradeables/utils/SafeAccessControlEnumerableUpgradeable.sol";
-import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/upgradeables/utils/SafePausableUpgradeable.sol";
+} from "src/utils/SafeAccessControlEnumerableUpgradeable.sol";
+import {SafePausableUpgradeable, ISafePausableUpgradeable} from "src/utils/SafePausableUpgradeable.sol";
 
-import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/upgradeables/OZNFTBaseUpgradeable.sol";
-import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/upgradeables/ERC721ABaseUpgradeable.sol";
-import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/upgradeables/ERC1155BaseUpgradeable.sol";
+import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "src/OZNFTBaseUpgradeable.sol";
+import {ERC721ABaseUpgradeable, IERC721ABaseUpgradeable} from "src/ERC721ABaseUpgradeable.sol";
+import {ERC1155BaseUpgradeable, IERC1155BaseUpgradeable} from "src/ERC1155BaseUpgradeable.sol";
 
-import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "src/upgradeables/NFTBaseUpgradeable.sol";
+import {NFTBaseUpgradeable, INFTBaseUpgradeable} from "src/NFTBaseUpgradeable.sol";
 
 abstract contract TestHelper is Test {
     address payable internal joepegs = payable(makeAddr("joepegs"));
