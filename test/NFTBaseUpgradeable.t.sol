@@ -141,6 +141,7 @@ contract NFTBaseUpgradeableTest is TestHelper {
     }
 
     function test_WithdrawAVAX(uint256 amount, address alice) public {
+        vm.assume(alice.code.length == 0);
         amount = bound(amount, 0.01 ether, 100_000 ether);
         deal(address(nftBase), amount);
 
@@ -156,8 +157,8 @@ contract NFTBaseUpgradeableTest is TestHelper {
     }
 
     function test_WithdrawAVAXWhenProjectOwner(address alice, address bob, uint256 amount) public {
-        vm.assume(alice != address(this));
-        vm.assume(bob != address(this) && bob != joepegs);
+        vm.assume(alice.code.length == 0);
+        vm.assume(bob != address(this) && bob != joepegs && bob.code.length == 0);
 
         amount = bound(amount, 0.01 ether, 100_000 ether);
         deal(address(nftBase), amount);
