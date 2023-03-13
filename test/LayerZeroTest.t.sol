@@ -157,6 +157,7 @@ contract LayerZeroTest is TestHelper {
 
     function test_Revert_SendFromWhenNotApproved(address alice, uint256 tokenId) public {
         vm.assume(alice != address(0) && alice != address(this));
+        vm.deal(alice, 10 ether);
 
         ozNFT_A.mint(tokenId);
         address owner = ozNFT_A.owner();
