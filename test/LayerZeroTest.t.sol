@@ -157,6 +157,7 @@ contract LayerZeroTest is TestHelper {
 
     function test_Revert_SendFromWhenNotApproved(address alice, uint256 tokenId) public {
         vm.assume(alice != address(0) && alice != address(this));
+        vm.deal(alice, 10 ether);
 
         ozNFT_A.mint(tokenId);
         address owner = ozNFT_A.owner();
@@ -188,7 +189,9 @@ contract LayerZeroTest is TestHelper {
     }
 
     function test_Revert_IfNotApprovedOnNonProxyChain(address alice, uint256 tokenId) public {
-        vm.assume(alice != address(0) && alice != address(this));
+        vm.assume(
+            alice != address(0) && alice != address(this) && alice != address(ozNFT_A) && alice != address(ozNFT_B)
+        );
 
         ozNFT_A.mint(tokenId);
         address owner = ozNFT_A.owner();
@@ -209,8 +212,8 @@ contract LayerZeroTest is TestHelper {
         assertEq(ozNFT_B.ownerOf(tokenId), owner);
 
         // reverts because user is not approved
-        vm.startPrank(alice);
         vm.expectRevert("ONFT721: send caller is not owner nor approved");
+        vm.startPrank(alice);
         ozNFT_B.sendFrom(
             owner, chainId_A, abi.encodePacked(alice), tokenId, payable(alice), address(0), defaultAdapterParams
         );

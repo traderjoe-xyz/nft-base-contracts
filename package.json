@@ -1,0 +1,11 @@
+{
+  "name": "nft-base-contracts",
+  "version": "0.1.0",
+  "description": "Set of contracts to be used as a base for NFT collections.",
+  "repository": "https://github.com/traderjoe-xyz/nft-base-contracts.git",
+  "author": "Trader Joe",
+  "license": "MIT",
+  "files": [
+    "src/*"
+  ]
+}
