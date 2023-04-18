@@ -2,7 +2,7 @@
 pragma solidity 0.8.13;
 
 import {ONFT721Upgradeable} from "./layerZero/ONFT721Upgradeable.sol";
-import {ILayerZeroEndpointUpgradeable} from "./layerZero/lzAppUpgradeable.sol";
+import {ILayerZeroEndpointUpgradeable} from "./layerZero/LzAppUpgradeable.sol";
 import {ERC721Upgradeable, IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
