@@ -79,6 +79,26 @@ contract OZNFTBaseUpgradeableTest is TestHelper {
         ozNftBase.setUnrevealedURI(unrevealedURI);
     }
 
+    function test_SetLzEndpointAddress(address lzEndpoint) public {
+        vm.assume(lzEndpoint != address(0));
+        ozNftBase.setLzEndpoint(lzEndpoint);
+
+        assertEq(address(ozNftBase.lzEndpoint()), lzEndpoint, "test_SetLzEndpointAddress::1");
+    }
+
+    function test_Revert_SetLzEndpointAddressWhenNotOwner(address alice, address lzEndpoint) public {
+        vm.assume(alice != address(0) && alice != address(this));
+
+        vm.expectRevert(IPendingOwnableUpgradeable.PendingOwnableUpgradeable__NotOwner.selector);
+        vm.prank(alice);
+        ozNftBase.setLzEndpoint(lzEndpoint);
+    }
+
+    function test_Revert_SetLzEndpointAddressToZero() public {
+        vm.expectRevert(IOZNFTBaseUpgradeable.OZNFTBaseUpgradeable__InvalidAddress.selector);
+        ozNftBase.setLzEndpoint(address(0));
+    }
+
     function test_SupportInterface() public {
         assertTrue(
             ozNftBase.supportsInterface(type(IERC165Upgradeable).interfaceId)
