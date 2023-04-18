@@ -2,6 +2,7 @@
 pragma solidity 0.8.13;
 
 import {ONFT721Upgradeable} from "./layerZero/ONFT721Upgradeable.sol";
+import {ILayerZeroEndpointUpgradeable} from "./layerZero/LzAppUpgradeable.sol";
 import {ERC721Upgradeable, IERC721Upgradeable} from "openzeppelin-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
 import {NFTBaseUpgradeable} from "./NFTBaseUpgradeable.sol";
@@ -52,6 +53,19 @@ abstract contract OZNFTBaseUpgradeable is NFTBaseUpgradeable, ONFT721Upgradeable
     function setUnrevealedURI(string calldata _unrevealedURI) external override onlyOwner {
         unrevealedURI = _unrevealedURI;
         emit UnrevealedURISet(unrevealedURI);
+    }
+
+    /**
+     * @notice Set LayerZeroEndpoint address
+     * @param _endpoint address of LayerZeroEndpoint to set
+     */
+    function setLzEndpoint(address _endpoint) external override onlyOwner {
+        if (_endpoint == address(0)) {
+            revert OZNFTBaseUpgradeable__InvalidAddress();
+        }
+
+        lzEndpoint = ILayerZeroEndpointUpgradeable(_endpoint);
+        emit LZEndpointSet(_endpoint);
     }
 
     /**
