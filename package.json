@@ -1,6 +1,6 @@
 {
   "name": "@traderjoe-xyz/nft-base-contracts",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Set of contracts to be used as a base for NFT collections.",
   "repository": "https://github.com/traderjoe-xyz/nft-base-contracts.git",
   "author": "Trader Joe",
